@@ -10,6 +10,7 @@ import { SSHPortForwardingModalComponent } from './sshPortForwardingModal.compon
 import { SSHProfile } from '../api'
 import { SSHShellSession } from '../session/shell'
 import { SSHMultiplexerService } from '../services/sshMultiplexer.service'
+import { PasswordStorageService } from '../services/passwordStorage.service'
 
 /** @hidden */
 @Component({
@@ -22,6 +23,7 @@ import { SSHMultiplexerService } from '../services/sshMultiplexer.service'
     animations: BaseTerminalTabComponent.animations,
 })
 export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> {
+    private passwordStorage: PasswordStorageService|null=null
     Platform = Platform
     sshSession: SSHSession|null = null
     session: SSHShellSession|null = null
@@ -41,6 +43,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         this.sessionChanged$.subscribe(() => {
             this.activeKIPrompt = null
         })
+        this.passwordStorage = injector.get(PasswordStorageService)
     }
 
     ngOnInit (): void {
@@ -212,6 +215,22 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             this.sftpPanelVisible = true
         }, 100)
     }
+
+    async copyHost (): Promise<void> {
+        const text = this.profile.options.host
+        this.platform.setClipboard({ text })
+        this.notifications.notice(this.translate.instant('Copied'))
+    }
+
+    async copyPwd (): Promise<void> {
+        let text = this.profile.options.password
+        if(!text) {
+            text = await this.passwordStorage!.loadPassword(this.profile) ?? ''
+        }
+        this.platform.setClipboard({ text })
+        this.notifications.notice(this.translate.instant('Copied'))
+    }
+
 
     @HostListener('click')
     onClick (): void {

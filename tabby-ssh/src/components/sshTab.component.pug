@@ -1,7 +1,7 @@
 terminal-toolbar([tab]='this')
     i.fas.fa-xs.fa-circle.text-success.me-2(*ngIf='session && session.open')
     i.fas.fa-xs.fa-circle.text-danger.me-2(*ngIf='!session || !session.open')
-    strong.me-auto {{profile.options.user}}@{{profile.options.host}}:{{profile.options.port}}
+    strong.me-auto((click)='copyHost()') {{profile.options.user}}@{{profile.options.host}}:{{profile.options.port}}
 
     .me-2(
         ngbDropdown,
@@ -17,6 +17,10 @@ terminal-toolbar([tab]='this')
                     strong(translate) Working directory detection
                     div(translate) Learn how to allow Tabby to detect remote shell's working directory.
                 i.fas.fa-arrow-right.ms-4
+
+    button.btn.btn-sm.btn-link.me-2((click)='copyPwd()')
+        i.fas.fa-copy
+        span(translate) Copy
 
     button.btn.btn-sm.btn-link.me-2((click)='reconnect()')
         i.fas.fa-redo
