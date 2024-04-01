@@ -7,7 +7,8 @@ Tabby is an Electron app, with the frontend written in Typescript with the help 
 First of all, clone this repository.
 
 # Install Dependencies
-- [Node.js](https://nodejs.org/en/download/) **version 15 or newer*
+
+- [Node.js](https://nodejs.org/en/download/) \**version 15 or newer*
 - [Yarn](https://yarnpkg.com/)
 
 First, from within the `tabby` directory install the dependencies via yarn:
@@ -52,6 +53,7 @@ node scripts/build-macos.mjs
 The artifacts will be produced in the `dist` folder.
 
 # Project layout
+
 ```
 tabby
 ├─ app                                  # Electron app, just the bare essentials
@@ -71,6 +73,7 @@ tabby
 ```
 
 # Plugin layout
+
 ```
 tabby-pluginname
 ├─ src                                  # Typescript code
@@ -89,7 +92,7 @@ tabby-pluginname
 
 # Plugins
 
-The app will load all plugins from the source checkout in the dev mode, from the user's plugins directory at all times (click `Open Plugins Directory` under `Settings` > `Plugins`) and from the directory specified by the `TABBY_PLUGINS` environment var.
+The app will load all plugins from the source checkout in the dev mode, from the user's plugins directory at all times (click `Open Plugins Directory` under `Settings` &gt; `Plugins`) and from the directory specified by the `TABBY_PLUGINS` environment var.
 
 Only modules whose `package.json` file contains a `tabby-plugin` keyword will be loaded.
 
@@ -109,7 +112,6 @@ export default class MyModule {
 ```
 
 Plugins provide functionality by exporting singular or multi providers:
-
 
 ```javascript
 import { NgModule, Injectable } from '@angular/core'
@@ -136,7 +138,6 @@ export class MyButtonProvider extends ToolbarButtonProvider {
 })
 export default class MyModule { }
 ```
-
 
 See `tabby-core/src/api.ts`, `tabby-settings/src/api.ts`, `tabby-local/src/api.ts` and `tabby-terminal/src/api.ts` for the available extension points.
 

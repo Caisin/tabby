@@ -218,6 +218,10 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
 
     async copyHost (): Promise<void> {
         const text = this.profile.options.host
+        this.setClipboard(text)
+    }
+
+    async setClipboard (text: string): Promise<void> {
         this.platform.setClipboard({ text })
         this.notifications.notice(this.translate.instant('Copied'))
     }
@@ -227,8 +231,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         if(!text) {
             text = await this.passwordStorage!.loadPassword(this.profile) ?? ''
         }
-        this.platform.setClipboard({ text })
-        this.notifications.notice(this.translate.instant('Copied'))
+        this.setClipboard(text)
     }
 
 
